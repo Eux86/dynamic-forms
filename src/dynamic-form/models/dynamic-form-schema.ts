@@ -48,6 +48,8 @@ export interface IValidationError {
   message: string;
 }
 
+export type ValidationFunctionType = (value: any, fieldConfiguration: IFieldConfiguration) => boolean;
+
 export interface IOption {
   type: 'multiple-selection' | 'single-selection',
   items: IOptionItem[];

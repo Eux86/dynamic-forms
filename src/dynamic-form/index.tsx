@@ -14,7 +14,7 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
     onChange,
   } = props;
 
-  const [formData, setFormData] = React.useState({});
+  const [formData, setFormData] = React.useState({} as any);
 
   const onFieldChanged: OnInputChangeEventType = React.useCallback((data: string, configuration: IFieldConfiguration) => {
     setFormData({
@@ -35,6 +35,11 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
         <div key={field.id}>
           <label htmlFor={field.id}>{field.label}</label>
           <DynamicInput configuration={field} onChange={onFieldChanged} />
+          <FieldValidator configuration={field} data={formData[field.id]}>
+            {(errors: any) => errors.map((error: any) => (
+              <ValidationError message={error.message} />
+            )}
+          </FieldValidator>
         </div>
       ))}
     </>

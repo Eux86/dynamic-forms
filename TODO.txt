@@ -1,1 +1,3 @@
-Use decorator to implement common functions for the controls
+- Use decorator to implement common functions for the controls
+- unit tests for components
+- read-only mode
