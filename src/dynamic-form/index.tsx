@@ -1,7 +1,7 @@
 import React from 'react';
 import IDynamicFormSchema, { IFieldConfiguration } from './models/dynamic-form-schema';
 import { OnInputChangeEventType, OnFormChangeEventType } from './models/event-types';
-import { inputTypeSelector } from './input-types';
+import { DynamicInput } from './dynamic-input';
 
 interface IProps {
   onChange?: OnFormChangeEventType,
@@ -16,26 +16,25 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
 
   const [formData, setFormData] = React.useState({});
 
-  const onFieldChanged: OnInputChangeEventType = (data: string, configuration: IFieldConfiguration) => {
+  const onFieldChanged: OnInputChangeEventType = React.useCallback((data: string, configuration: IFieldConfiguration) => {
     setFormData({
       ...formData,
       [configuration.id]: data,
     });
-  };
+  }, [formData]);
 
   React.useEffect(() => {
     if (onChange) {
       onChange(formData);
     }
-  }, [formData]);
+  }, [formData, onChange]);
 
   return (
     <>
       {schema.fields.map((field: IFieldConfiguration) => (
         <div key={field.id}>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label>{field.label}</label>
-          {inputTypeSelector(field, onFieldChanged)}
+          <label htmlFor={field.id}>{field.label}</label>
+          <DynamicInput configuration={field} onChange={onFieldChanged} />
         </div>
       ))}
     </>

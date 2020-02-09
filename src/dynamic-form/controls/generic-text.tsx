@@ -1,13 +1,7 @@
 import React from 'react';
-import { IFieldConfiguration } from '../models/dynamic-form-schema';
-import { OnInputChangeEventType } from '../models/event-types';
+import { IInputControl } from '../models/dynamic-form-schema';
 
-interface IProps {
-  onChange: OnInputChangeEventType;
-  configuration: IFieldConfiguration;
-}
-
-export const GenericText: React.FunctionComponent<IProps> = (props) => {
+export const GenericTextControl: React.FunctionComponent<IInputControl> = (props) => {
   const {
     configuration,
     onChange,

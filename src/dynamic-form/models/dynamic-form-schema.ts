@@ -1,7 +1,8 @@
+import { OnInputChangeEventType } from './event-types';
 
 export default interface IDynamicFormSchema {
   fields: IFieldConfiguration[];
-// eslint-disable-next-line semi
+  // eslint-disable-next-line semi
 }
 
 export interface IFieldConfiguration {
@@ -9,14 +10,14 @@ export interface IFieldConfiguration {
   label?: string;
   defaultValue?: string;
   validations?: IValidation[];
-  options?: IOption[];
+  options?: IOption;
   type: FieldType;
   description?: string;
   placeholder?: string;
 }
 
 export type FieldType =
-    'text'
+  'text'
   | 'number'
   | 'datetime-local'
   | 'email'
@@ -25,6 +26,11 @@ export type FieldType =
   | 'date'
   | 'options'
   | 'boolean';
+
+export interface IInputControl {
+  onChange: OnInputChangeEventType;
+  configuration: IFieldConfiguration;
+}
 
 export enum ValidationType {
   pattern,
@@ -43,6 +49,11 @@ export interface IValidationError {
 }
 
 export interface IOption {
+  type: 'multiple-selection' | 'single-selection',
+  items: IOptionItem[];
+}
+
+export interface IOptionItem {
   id: string;
   value: string;
   label: string;
