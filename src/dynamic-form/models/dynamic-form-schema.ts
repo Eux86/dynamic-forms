@@ -1,5 +1,7 @@
+
 export default interface IDynamicFormSchema {
   fields: IFieldConfiguration[];
+// eslint-disable-next-line semi
 }
 
 export interface IFieldConfiguration {

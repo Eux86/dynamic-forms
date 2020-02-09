@@ -1,8 +1,6 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
 import { DynamicForm } from '../dynamic-form/index';
-import IDynamicFormSchema, { FieldType } from '../dynamic-form/models/dynamic-form-schema';
-import { OnFormChangeEventType } from '../dynamic-form/models/event-types';
+import IDynamicFormSchema from '../dynamic-form/models/dynamic-form-schema';
 
 export default {
   title: 'DynamicForm',
@@ -31,17 +29,15 @@ const demoSchema: IDynamicFormSchema = {
       label: 'age',
       type: 'number',
     },
-  ]
-}
+  ],
+};
 
 export const Default = () => {
   const [data, setData] = React.useState({});
   return (
     <>
-      <DynamicForm schema={demoSchema} onChange={(data: any) => setData(data)} />
-      <textarea style={{width: '250px', height: '200px'}} value={JSON.stringify(data, null, 2)}></textarea>
+      <DynamicForm schema={demoSchema} onChange={(newData: any) => setData(newData)} />
+      <textarea style={{ width: '250px', height: '200px' }} value={JSON.stringify(data, null, 2)} />
     </>
-  )
+  );
 };
-
-
