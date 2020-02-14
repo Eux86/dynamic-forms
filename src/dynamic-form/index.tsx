@@ -2,6 +2,7 @@ import React from 'react';
 import IDynamicFormSchema, { IFieldConfiguration } from './models/dynamic-form-schema';
 import { OnInputChangeEventType, OnFormChangeEventType } from './models/event-types';
 import { DynamicInput } from './dynamic-input';
+import { FieldValidator } from './field-validator';
 
 interface IProps {
   onChange?: OnFormChangeEventType,
@@ -37,8 +38,9 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
           <DynamicInput configuration={field} onChange={onFieldChanged} />
           <FieldValidator configuration={field} data={formData[field.id]}>
             {(errors: any) => errors.map((error: any) => (
-              <ValidationError message={error.message} />
-            )}
+              // <ValidationError message={error.message} />
+              <p>{error.message}</p>
+            ))}
           </FieldValidator>
         </div>
       ))}

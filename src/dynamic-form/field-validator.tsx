@@ -1,5 +1,9 @@
 import React from 'react';
-import { IFieldConfiguration, ValidationFunctionType, IValidationError, IValidation } from './models/dynamic-form-schema';
+import {
+  IFieldConfiguration,
+  ValidationFunctionType,
+  IValidationError,
+} from './models/dynamic-form-schema';
 import validations from './validations';
 
 interface IProps {
@@ -13,17 +17,16 @@ export const FieldValidator: React.FunctionComponent<IProps> = (props) => {
     data,
     children,
   } = props;
-  let validationErrors: IValidationError[] = [];
+  const validationErrors: IValidationError[] = [];
   validations.forEach((validation: ValidationFunctionType) => {
     if (validation(data, configuration)) {
       validationErrors.push({
         fieldId: configuration.id,
-        // message: configuration.validations?.find((val:IValidation) => val.type === )
-        // TODO: Add validation message from configuration
-      })
+        message: 'error...',
+      });
     }
   });
 
   // TODO: Children should contain a function that will iterate on the errors
-  return (children)
-}
+  return (<>{children}</>);
+};
