@@ -1,5 +1,5 @@
 import React from 'react';
-import IDynamicFormSchema, { IFieldConfiguration } from './models/dynamic-form-schema';
+import IDynamicFormSchema, { IFieldConfiguration, IValidation, ValidationType } from './models/dynamic-form-schema';
 import { OnInputChangeEventType, OnFormChangeEventType } from './models/event-types';
 import { DynamicInput } from './dynamic-input';
 import { FieldValidator } from './field-validator';
@@ -45,11 +45,18 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
     }
   }, [formData, onChange]);
 
+  const isRequired = (configuration: IFieldConfiguration) => (
+    configuration.validations && configuration.validations.find((validation: IValidation) => validation.type === ValidationType.required)
+  );
+
   return (
     <>
       {schema.fields.map((field: IFieldConfiguration) => (
         <div key={field.id}>
-          <label htmlFor={field.id}>{field.label}</label>
+          <label htmlFor={field.id}>
+            {field.label}
+            {isRequired(field) ? '*' : ''}
+          </label>
           <DynamicInput configuration={field} onChange={onFieldChanged} onTouched={onFieldTouched} />
           {formData?.touched && formData?.touched[field.id] && (
             <FieldValidator
