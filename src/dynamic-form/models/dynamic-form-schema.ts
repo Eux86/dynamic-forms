@@ -14,6 +14,8 @@ export interface IFieldConfiguration {
   type: FieldType;
   description?: string;
   placeholder?: string;
+  required?: boolean;
+  requiredErrorMessage?: string;
 }
 
 export type FieldType =
@@ -34,21 +36,22 @@ export interface IInputControl {
 
 export enum ValidationType {
   pattern,
-  minValue,
-  maxValue,
+  minLength,
+  maxLength,
   required
 }
 
 export interface IValidation {
   type: ValidationType;
-  data: string;
+  data?: string;
+  errorMessage?: string;
 }
 export interface IValidationError {
   fieldId: string;
   message: string;
 }
 
-export type ValidationFunctionType = (value: any, fieldConfiguration: IFieldConfiguration) => boolean;
+export type ValidationFunctionType = (value: any, fieldConfiguration: IFieldConfiguration) => string | undefined;
 
 export interface IOption {
   type: 'multiple-selection' | 'single-selection',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { DynamicForm } from '../dynamic-form/index';
-import IDynamicFormSchema from '../dynamic-form/models/dynamic-form-schema';
+import IDynamicFormSchema, { ValidationType } from '../dynamic-form/models/dynamic-form-schema';
 
 export default {
   title: 'DynamicForm',
@@ -13,6 +13,13 @@ const demoSchema: IDynamicFormSchema = {
       id: 'name',
       label: 'First Name',
       type: 'text',
+      validations: [
+        {
+          type: ValidationType.minLength,
+          data: '5',
+          errorMessage: 'The string should have at least 5 characters',
+        },
+      ],
     },
     {
       id: 'lastname',
