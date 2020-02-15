@@ -1,4 +1,5 @@
-- Required will be a validation like the others
 - Use decorator to implement common functions for the controls
 - unit tests for components
 - read-only mode
+- Versioning
+- NPM publish

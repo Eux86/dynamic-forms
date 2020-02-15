@@ -1,4 +1,4 @@
-import { OnInputChangeEventType } from './event-types';
+import { OnInputChangeEventType, OnInputTouchedEventType } from './event-types';
 
 export default interface IDynamicFormSchema {
   fields: IFieldConfiguration[];
@@ -31,6 +31,7 @@ export type FieldType =
 
 export interface IInputControl {
   onChange: OnInputChangeEventType;
+  onTouched: OnInputTouchedEventType;
   configuration: IFieldConfiguration;
 }
 

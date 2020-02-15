@@ -5,6 +5,7 @@ export const CheckboxGroup: React.FunctionComponent<IInputControl> = (props) => 
   const {
     configuration,
     onChange,
+    onTouched,
   } = props;
 
   const [state, setState] = React.useState([] as string[]);
@@ -33,6 +34,9 @@ export const CheckboxGroup: React.FunctionComponent<IInputControl> = (props) => 
     onChange(newState, configuration);
   };
 
+  const onBlurInternal = (): void => {
+    onTouched(configuration);
+  };
 
   return (
     <>
@@ -45,6 +49,7 @@ export const CheckboxGroup: React.FunctionComponent<IInputControl> = (props) => 
               value={option.value}
               checked={state.includes(option.value)}
               onChange={onChangeInternal}
+              onBlur={onBlurInternal}
             />
             {option.label}
           </label>

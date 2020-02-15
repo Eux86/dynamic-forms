@@ -9,6 +9,7 @@ import {
   ISetValueAction,
   ISetErrorsAction,
   reducer,
+  ISetTouchedAction,
 } from '../form-state-reducer';
 
 interface IProps {
@@ -34,6 +35,10 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
     dispatch({ type: 'set-errors', payload: { errors, fieldId: configuratin.id } } as ISetErrorsAction);
   }, []);
 
+  const onFieldTouched = React.useCallback((configuratin: IFieldConfiguration) => {
+    dispatch({ type: 'set-touched', payload: { fieldId: configuratin.id } } as ISetTouchedAction);
+  }, []);
+
   React.useEffect(() => {
     if (onChange) {
       onChange(formData.values, formData.errors);
@@ -45,16 +50,26 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
       {schema.fields.map((field: IFieldConfiguration) => (
         <div key={field.id}>
           <label htmlFor={field.id}>{field.label}</label>
-          <DynamicInput configuration={field} onChange={onFieldChanged} />
-          <FieldValidator
-            configuration={field}
-            data={formData?.values && formData?.values[field.id]}
-            onFieldErrors={onFieldErrors}
-          >
-            {ValidationError}
-          </FieldValidator>
+          <DynamicInput configuration={field} onChange={onFieldChanged} onTouched={onFieldTouched} />
+          {formData?.touched && formData?.touched[field.id] && (
+            <FieldValidator
+              configuration={field}
+              data={formData?.values && formData?.values[field.id]}
+              onFieldErrors={onFieldErrors}
+            >
+              {ValidationError}
+            </FieldValidator>
+          )}
         </div>
       ))}
+      { // Debugging help
+      /* <br />
+      <div>
+        Touched:
+        <pre>
+          {JSON.stringify(formData.touched, null, 2)}
+        </pre>
+      </div> */}
     </>
   );
 };
