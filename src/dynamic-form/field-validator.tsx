@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import {
   IFieldConfiguration,
   ValidationFunctionType,
-  IValidationError,
 } from './models/dynamic-form-schema';
 import validations from './validations';
 import { IValidationErrorProps } from './validation-error';
@@ -12,6 +11,7 @@ interface IProps {
   configuration: IFieldConfiguration;
   data: any;
   children: FunctionComponent<IValidationErrorProps>;
+  onFieldErrors?: (fieldId: string, error: string[]) => void;
 }
 
 export const FieldValidator: React.FunctionComponent<IProps> = (props) => {
@@ -19,24 +19,34 @@ export const FieldValidator: React.FunctionComponent<IProps> = (props) => {
     configuration,
     data,
     children,
+    onFieldErrors,
   } = props;
+
+  const validationErrors: string[] = React.useMemo(() => {
+    const temp: string[] = [];
+    validations.forEach((validation: ValidationFunctionType) => {
+      const result = validation(data, configuration);
+      if (result) {
+        temp.push(result);
+      }
+    });
+
+    return temp;
+  }, [configuration, data]);
+
+  React.useEffect(() => {
+    if (onFieldErrors) {
+      onFieldErrors(configuration.id, validationErrors);
+    }
+  }, [configuration.id, validationErrors]);
+
   if (!children) {
     return null;
   }
-  const validationErrors: IValidationError[] = [];
-  validations.forEach((validation: ValidationFunctionType) => {
-    const result = validation(data, configuration);
-    if (result) {
-      validationErrors.push({
-        fieldId: configuration.id,
-        message: result,
-      });
-    }
-  });
 
   return (
     <>
-      {validationErrors.map((error: IValidationError) => children({ error: error.message }))}
+      {validationErrors && validationErrors.map((error: string) => children({ error }))}
     </>
   );
 };

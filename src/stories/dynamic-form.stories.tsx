@@ -86,11 +86,13 @@ const demoSchema: IDynamicFormSchema = {
 
 export const Default = () => {
   const [data, setData] = React.useState({});
-  const onChange = React.useCallback((newData: any) => setData(newData), []);
+  const [errors, setErrors] = React.useState({});
+  const onChange = React.useCallback((newData: any, validationErrors: any) => { setData(newData); setErrors(validationErrors); }, []);
   return (
     <>
       <DynamicForm schema={demoSchema} onChange={onChange} />
       <textarea style={{ width: '250px', height: '200px' }} value={JSON.stringify(data, null, 2)} />
+      <textarea style={{ width: '250px', height: '200px' }} value={JSON.stringify(errors, null, 2)} />
     </>
   );
 };
