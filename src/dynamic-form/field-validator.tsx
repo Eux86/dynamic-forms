@@ -11,7 +11,7 @@ interface IProps {
   configuration: IFieldConfiguration;
   data: any;
   children: FunctionComponent<IValidationErrorProps>;
-  onFieldErrors?: (fieldId: string, error: string[]) => void;
+  onFieldErrors?: (configuration: IFieldConfiguration, error: string[]) => void;
 }
 
 export const FieldValidator: React.FunctionComponent<IProps> = (props) => {
@@ -36,9 +36,9 @@ export const FieldValidator: React.FunctionComponent<IProps> = (props) => {
 
   React.useEffect(() => {
     if (onFieldErrors) {
-      onFieldErrors(configuration.id, validationErrors);
+      onFieldErrors(configuration, validationErrors);
     }
-  }, [configuration.id, validationErrors]);
+  }, [configuration, onFieldErrors, validationErrors]);
 
   if (!children) {
     return null;

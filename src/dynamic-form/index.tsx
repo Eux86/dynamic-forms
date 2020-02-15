@@ -4,11 +4,19 @@ import { OnInputChangeEventType, OnFormChangeEventType } from './models/event-ty
 import { DynamicInput } from './dynamic-input';
 import { FieldValidator } from './field-validator';
 import { ValidationError } from './validation-error';
+import {
+  IFormState,
+  ISetValueAction,
+  ISetErrorsAction,
+  reducer,
+} from '../form-state-reducer';
 
 interface IProps {
   onChange?: OnFormChangeEventType,
   schema: IDynamicFormSchema,
 }
+
+const formInitialState: IFormState = {} as IFormState;
 
 const DynamicForm: React.FunctionComponent<IProps> = (props) => {
   const {
@@ -16,28 +24,21 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
     onChange,
   } = props;
 
-  const [formData, setFormData] = React.useState({} as any);
-  const [formErrors, setFormErrors] = React.useState({} as any);
+  const [formData, dispatch] = React.useReducer(reducer, formInitialState);
 
-  const onFieldChanged: OnInputChangeEventType = React.useCallback((data: string, configuration: IFieldConfiguration) => {
-    setFormData({
-      ...formData,
-      [configuration.id]: data,
-    });
-  }, [formData]);
+  const onFieldChanged: OnInputChangeEventType = React.useCallback((value: string, configuration: IFieldConfiguration) => {
+    dispatch({ type: 'set-values', payload: { value, fieldId: configuration.id } } as ISetValueAction);
+  }, []);
 
-  const onFieldErrors = React.useCallback((fieldId: string, errors: string[]) => {
-    setFormErrors({
-      ...formErrors,
-      [fieldId]: errors,
-    });
-  }, [formErrors]);
+  const onFieldErrors = React.useCallback((configuratin: IFieldConfiguration, errors: string[]) => {
+    dispatch({ type: 'set-errors', payload: { errors, fieldId: configuratin.id } } as ISetErrorsAction);
+  }, []);
 
   React.useEffect(() => {
     if (onChange) {
-      onChange(formData, formErrors);
+      onChange(formData.values, formData.errors);
     }
-  }, [formData, formErrors, onChange]);
+  }, [formData, onChange]);
 
   return (
     <>
@@ -45,7 +46,11 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
         <div key={field.id}>
           <label htmlFor={field.id}>{field.label}</label>
           <DynamicInput configuration={field} onChange={onFieldChanged} />
-          <FieldValidator configuration={field} data={formData[field.id]} onFieldErrors={onFieldErrors}>
+          <FieldValidator
+            configuration={field}
+            data={formData?.values && formData?.values[field.id]}
+            onFieldErrors={onFieldErrors}
+          >
             {ValidationError}
           </FieldValidator>
         </div>
