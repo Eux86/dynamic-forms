@@ -7,9 +7,9 @@ import {
 
 export const minLengthValidation:ValidationFunctionType = (value: any, fieldConfiguration: IFieldConfiguration): string | undefined => {
   // Return and pass the validation if the field is empty
-  // if (value == null || value === '') {
-  //   return undefined;
-  // }
+  if (value == null || value === '') {
+    return undefined;
+  }
   // Return and pass the validation if this validation is not required for this field
   const validation = fieldConfiguration.validations?.find((item: IValidation) => item.type === ValidationType.minLength);
   if (!validation) {

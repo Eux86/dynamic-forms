@@ -25,6 +25,12 @@ const demoSchema: IDynamicFormSchema = {
       id: 'lastname',
       label: 'Last Name',
       type: 'text',
+      validations: [
+        {
+          type: ValidationType.required,
+          errorMessage: 'The field is required',
+        },
+      ],
     },
     {
       id: 'phone',

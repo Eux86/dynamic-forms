@@ -1,3 +1,4 @@
 import { minLengthValidation } from './minLength';
+import { requiredValidation } from './required';
 
-export default [minLengthValidation];
+export default [requiredValidation, minLengthValidation];
