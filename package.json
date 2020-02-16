@@ -1,6 +1,6 @@
 {
   "name": "@eux86/dynamic-forms",
-  "version": "0.0.0-development",
+  "version": "1.2.5",
   "private": false,
   "author": {
     "name": "Eugenio Di Tullio"
@@ -69,8 +69,16 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     "@semantic-release/npm",
-    ["@semantic-release/npm", {
-      "npmPublish": true
-    }]
-  ]
+    [
+      "@semantic-release/npm",
+      {
+        "npmPublish": true
+      }
+    ]
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest",
+    "access": "public"
+  }
 }
