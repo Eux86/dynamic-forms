@@ -3,3 +3,7 @@
 /node_modules/
 /.storybook/
 /.github/
+.eslintrc.js
+.gitignore
+.npmignore
+.tsconfig.json
