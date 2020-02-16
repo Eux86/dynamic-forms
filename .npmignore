@@ -6,4 +6,4 @@
 .eslintrc.js
 .gitignore
 .npmignore
-.tsconfig.json
+tsconfig.json
