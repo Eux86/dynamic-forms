@@ -1,6 +1,6 @@
 import { OnInputChangeEventType, OnInputTouchedEventType } from './event-types';
 
-export default interface IDynamicFormSchema {
+export interface IDynamicFormSchema {
   fields: IFieldConfiguration[];
   // eslint-disable-next-line semi
 }
