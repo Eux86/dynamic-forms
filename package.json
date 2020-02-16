@@ -1,6 +1,6 @@
 {
   "name": "dynamic-forms",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -23,7 +23,8 @@
     "eslint:fix": "eslint --fix '**/*.{ts,tsx}'",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "semantic-release": "semantic-release"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -53,6 +54,11 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "semantic-release": "^17.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Eux86/dynamic-forms.git"
   }
 }
