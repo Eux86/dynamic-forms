@@ -17,7 +17,8 @@
     "moduleResolution": "Node",
     "isolatedModules": true,
     "noEmit": false,
-    "jsx": "react"
+    "jsx": "react",
+    "declaration": true
   },
   "include": [
     "src", "index.ts"
