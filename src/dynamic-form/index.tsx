@@ -10,7 +10,7 @@ import {
   ISetErrorsAction,
   reducer,
   ISetTouchedAction,
-} from '../form-state-reducer';
+} from './form-state-reducer';
 
 interface IProps {
   onChange?: OnFormChangeEventType,
