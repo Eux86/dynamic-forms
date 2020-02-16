@@ -1,6 +1,3 @@
-import { DynamicForm } from './dynamic-form';
-import * as Models from './dynamic-form/models/dynamic-form-schema';
-import * as Events from './dynamic-form/models/event-types';
-
-export default DynamicForm;
-export { Models, Events };
+export { default as DynamicForm } from './dynamic-form';
+export * from './dynamic-form/models/dynamic-form-schema';
+export * from './dynamic-form/models/event-types';
