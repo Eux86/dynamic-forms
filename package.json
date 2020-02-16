@@ -2,9 +2,11 @@
   "name": "@eux86/dynamic-forms",
   "version": "1.2.6",
   "private": false,
+  "description": "A react component for creating dynamic forms based on a schema (json/js) description",
   "author": {
     "name": "Eugenio Di Tullio"
   },
+  "main": "lib/index.js",
   "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -20,8 +22,7 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "tsc",
     "lint": "react-scripts lint",
     "eslint": "eslint '**/*.{ts,tsx}'",
     "eslint:fix": "eslint --fix '**/*.{ts,tsx}'",
