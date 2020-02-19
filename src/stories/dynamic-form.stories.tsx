@@ -31,6 +31,13 @@ const demoSchema: IDynamicFormSchema = {
           errorMessage: 'The field is required',
         },
       ],
+      conditions: [
+        {
+          type: 'field-value',
+          fieldId: 'name',
+          value: 'Eugenio',
+        },
+      ],
     },
     {
       id: 'phone',

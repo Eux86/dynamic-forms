@@ -4,7 +4,7 @@
 			"path": "."
 		},
 		{
-			"path": "..\\dynamic-forms-github-page"
+			"path": "../dynamic-forms-sandbox"
 		}
 	],
 	"settings": {}

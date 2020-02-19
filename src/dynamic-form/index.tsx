@@ -4,6 +4,7 @@ import {
   IFieldConfiguration,
   IValidation,
   ValidationType,
+  ConditionFunctionType,
 } from './models/dynamic-form-schema';
 import { OnInputChangeEventType, OnFormChangeEventType } from './models/event-types';
 import { DynamicInput } from './dynamic-input';
@@ -16,6 +17,7 @@ import {
   reducer,
   ISetTouchedAction,
 } from './form-state-reducer';
+import conditions from './conditions';
 
 interface IProps {
   onChange?: OnFormChangeEventType,
@@ -53,26 +55,27 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
   const isRequired = (configuration: IFieldConfiguration) => (
     configuration.validations && configuration.validations.find((validation: IValidation) => validation.type === ValidationType.required)
   );
-
   return (
     <>
       {schema.fields.map((field: IFieldConfiguration) => (
-        <div key={field.id}>
-          <label htmlFor={field.id}>
-            {field.label}
-            {isRequired(field) ? '*' : ''}
-          </label>
-          <DynamicInput configuration={field} onChange={onFieldChanged} onTouched={onFieldTouched} />
-          {formData?.touched && formData?.touched[field.id] && (
-            <FieldValidator
-              configuration={field}
-              data={formData?.values && formData?.values[field.id]}
-              onFieldErrors={onFieldErrors}
-            >
-              {ValidationError}
-            </FieldValidator>
-          )}
-        </div>
+        conditions.map((condition: ConditionFunctionType) => condition(field, formData.values) && (
+          <div key={field.id}>
+            <label htmlFor={field.id}>
+              {field.label}
+              {isRequired(field) ? '*' : ''}
+            </label>
+            <DynamicInput configuration={field} onChange={onFieldChanged} onTouched={onFieldTouched} />
+            {formData?.touched && formData?.touched[field.id] && (
+              <FieldValidator
+                configuration={field}
+                data={formData?.values && formData?.values[field.id]}
+                onFieldErrors={onFieldErrors}
+              >
+                {ValidationError}
+              </FieldValidator>
+            )}
+          </div>
+        ))
       ))}
       { // Debugging help
       /* <br />
