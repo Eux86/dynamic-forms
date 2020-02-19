@@ -31,13 +31,6 @@ const demoSchema: IDynamicFormSchema = {
           errorMessage: 'The field is required',
         },
       ],
-      conditions: [
-        {
-          type: 'field-value',
-          fieldId: 'name',
-          value: 'Eugenio',
-        },
-      ],
     },
     {
       id: 'phone',
@@ -66,8 +59,25 @@ const demoSchema: IDynamicFormSchema = {
             label: 'Mrs./Mss.',
             value: 'mrsmss',
           },
+          {
+            id: 'other',
+            label: 'Other',
+            value: 'other',
+          },
         ],
       },
+    },
+    {
+      id: 'othertitle',
+      label: 'Custom Title',
+      type: 'text',
+      conditions: [
+        {
+          fieldId: 'title',
+          type: 'field-value',
+          value: 'other',
+        },
+      ],
     },
     {
       id: 'pets',
