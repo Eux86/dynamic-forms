@@ -6,6 +6,7 @@ import {
   ValidationType,
   ConditionFunctionType,
   ValidationFunctionType,
+  IDynamicFieldInputs,
 } from './models/dynamic-form-schema';
 import { OnInputChangeEventType, OnFormChangeEventType } from './models/event-types';
 import { DynamicInput } from './dynamic-input';
@@ -20,13 +21,29 @@ import {
 } from './form-state-reducer';
 import defaultConditions from './conditions';
 import defaultValidations from './validations';
+import { GenericTextControl } from './controls/generic-text';
+import { SelectControl } from './controls/select';
+import { CheckboxGroup } from './controls/checkbox-group';
 
 interface IProps {
   onChange?: OnFormChangeEventType,
   schema: IDynamicFormSchema,
   validations?: ValidationFunctionType[],
   conditions?: ConditionFunctionType[],
+  customInputs?: IDynamicFieldInputs,
 }
+
+const defaultInputMapping: IDynamicFieldInputs = {
+  text: GenericTextControl,
+  number: GenericTextControl,
+  date: GenericTextControl,
+  'datetime-local': GenericTextControl,
+  tel: GenericTextControl,
+  password: GenericTextControl,
+  email: GenericTextControl,
+  'single-selection': SelectControl,
+  'multiple-selection': CheckboxGroup,
+};
 
 const formInitialState: IFormState = {} as IFormState;
 
@@ -36,9 +53,11 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
     onChange,
     conditions: customConditions,
     validations: customValidations,
+    customInputs,
   } = props;
   const conditions = [...defaultConditions, ...customConditions ?? []];
   const validations = [...defaultValidations, ...customValidations ?? []];
+  const inputMapping = { ...defaultInputMapping, ...customInputs };
 
   const [formData, dispatch] = React.useReducer(reducer, formInitialState);
 
@@ -72,7 +91,12 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
               {field.label}
               {isRequired(field) ? '*' : ''}
             </label>
-            <DynamicInput configuration={field} onChange={onFieldChanged} onTouched={onFieldTouched} />
+            <DynamicInput
+              inputMapping={inputMapping}
+              configuration={field}
+              onChange={onFieldChanged}
+              onTouched={onFieldTouched}
+            />
             {formData?.touched && formData?.touched[field.id] && (
               <FieldValidator
                 configuration={field}

@@ -40,9 +40,8 @@ const demoSchema: IDynamicFormSchema = {
     {
       id: 'title',
       label: 'Title',
-      type: 'options',
+      type: 'single-selection',
       options: {
-        type: 'single-selection',
         items: [
           {
             id: 'mr',
@@ -77,9 +76,8 @@ const demoSchema: IDynamicFormSchema = {
     {
       id: 'pets',
       label: 'Owned Pets',
-      type: 'options',
+      type: 'multiple-selection',
       options: {
-        type: 'multiple-selection',
         items: [
           {
             id: 'cat',

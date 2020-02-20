@@ -27,8 +27,8 @@ export type FieldType =
   | 'password'
   | 'tel'
   | 'date'
-  | 'options'
-  | 'boolean';
+  | 'multiple-selection'
+  | 'single-selection';
 
 export interface IInputControl {
   onChange: OnInputChangeEventType;
@@ -57,7 +57,6 @@ export type ValidationFunctionType = (value: any, fieldConfiguration: IFieldConf
 export type ConditionFunctionType = (configuration: IFieldConfiguration, formData: any) => boolean;
 
 export interface IOption {
-  type: 'multiple-selection' | 'single-selection',
   items: IOptionItem[];
 }
 
@@ -71,4 +70,16 @@ export interface ICondition {
   type: 'field-value';
   fieldId: string;
   value: string;
+}
+
+export interface IDynamicFieldInputs {
+  text: React.FunctionComponent<IInputControl>,
+  number: React.FunctionComponent<IInputControl>,
+  date: React.FunctionComponent<IInputControl>,
+  'datetime-local': React.FunctionComponent<IInputControl>,
+  tel: React.FunctionComponent<IInputControl>,
+  password: React.FunctionComponent<IInputControl>,
+  email: React.FunctionComponent<IInputControl>,
+  'single-selection': React.FunctionComponent<IInputControl>,
+  'multiple-selection': React.FunctionComponent<IInputControl>,
 }
