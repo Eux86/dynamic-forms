@@ -93,16 +93,15 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
               onFieldChanged={onFieldChanged}
               onFieldTouched={onFieldTouched}
             />
-            {formData?.touched && formData?.touched[field.id] && (
-              <FieldValidator
-                configuration={field}
-                data={formData?.values && formData?.values[field.id]}
-                onFieldErrors={onFieldErrors}
-                validations={validations}
-              >
-                {ValidationError}
-              </FieldValidator>
-            )}
+            <FieldValidator
+              formData={formData}
+              configuration={field}
+              data={formData?.values && formData?.values[field.id]}
+              onFieldErrors={onFieldErrors}
+              validations={validations}
+            >
+              {ValidationError}
+            </FieldValidator>
           </div>
         ))
       ))}

@@ -6,12 +6,12 @@ import {
 import { IValidationErrorProps } from './validation-error';
 
 interface IProps {
-  // children: (error: string) => ReactNode;
   configuration: IFieldConfiguration;
   data: any;
   children: FunctionComponent<IValidationErrorProps>;
   onFieldErrors?: (configuration: IFieldConfiguration, error: string[]) => void;
   validations: ValidationFunctionType[],
+  formData: any,
 }
 
 export const FieldValidator: React.FunctionComponent<IProps> = (props) => {
@@ -21,6 +21,7 @@ export const FieldValidator: React.FunctionComponent<IProps> = (props) => {
     children,
     onFieldErrors,
     validations,
+    formData,
   } = props;
 
   const validationErrors: string[] = React.useMemo(() => {
@@ -33,13 +34,18 @@ export const FieldValidator: React.FunctionComponent<IProps> = (props) => {
     });
 
     return temp;
-  }, [configuration, data]);
+  }, [configuration, data, validations]);
 
   React.useEffect(() => {
     if (onFieldErrors) {
       onFieldErrors(configuration, validationErrors);
     }
   }, [configuration, onFieldErrors, validationErrors]);
+
+  // Returns if the field was still not touched
+  if (!(formData?.touched && formData?.touched[configuration.id])) {
+    return null;
+  }
 
   if (!children) {
     return null;
