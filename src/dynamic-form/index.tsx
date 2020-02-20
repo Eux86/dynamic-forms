@@ -2,14 +2,12 @@ import React from 'react';
 import {
   IDynamicFormSchema,
   IFieldConfiguration,
-  IValidation,
-  ValidationType,
   ConditionFunctionType,
   ValidationFunctionType,
   IDynamicFieldInputs,
+  IFieldTemplate,
 } from './models/dynamic-form-schema';
 import { OnInputChangeEventType, OnFormChangeEventType } from './models/event-types';
-import { DynamicInput } from './dynamic-input';
 import { FieldValidator } from './field-validator';
 import { ValidationError } from './validation-error';
 import {
@@ -24,6 +22,7 @@ import defaultValidations from './validations';
 import { GenericTextControl } from './controls/generic-text';
 import { SelectControl } from './controls/select';
 import { CheckboxGroup } from './controls/checkbox-group';
+import { FieldTemplate as DefaultFieldTemplate } from './field-template';
 
 interface IProps {
   onChange?: OnFormChangeEventType,
@@ -31,6 +30,7 @@ interface IProps {
   validations?: ValidationFunctionType[],
   conditions?: ConditionFunctionType[],
   customInputs?: IDynamicFieldInputs,
+  customFieldTemplate?: React.FunctionComponent<IFieldTemplate>,
 }
 
 const defaultInputMapping: IDynamicFieldInputs = {
@@ -54,10 +54,13 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
     conditions: customConditions,
     validations: customValidations,
     customInputs,
+    customFieldTemplate,
   } = props;
-  const conditions = [...defaultConditions, ...customConditions ?? []];
-  const validations = [...defaultValidations, ...customValidations ?? []];
-  const inputMapping = { ...defaultInputMapping, ...customInputs };
+
+  const conditions = React.useMemo(() => [...defaultConditions, ...customConditions ?? []], [customConditions]);
+  const validations = React.useMemo(() => [...defaultValidations, ...customValidations ?? []], [customValidations]);
+  const inputMapping = React.useMemo(() => ({ ...defaultInputMapping, ...customInputs ?? {} }), [customInputs]);
+  const FieldTemplate = React.useMemo(() => customFieldTemplate ?? DefaultFieldTemplate, [customFieldTemplate]);
 
   const [formData, dispatch] = React.useReducer(reducer, formInitialState);
 
@@ -79,23 +82,16 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
     }
   }, [formData, onChange]);
 
-  const isRequired = (configuration: IFieldConfiguration) => (
-    configuration.validations && configuration.validations.find((validation: IValidation) => validation.type === ValidationType.required)
-  );
   return (
     <>
       {schema && schema.fields && schema.fields.map((field: IFieldConfiguration) => (
         conditions && conditions.map((condition: ConditionFunctionType) => condition(field, formData.values) && (
           <div key={field.id}>
-            <label htmlFor={field.id}>
-              {field.label}
-              {isRequired(field) ? '*' : ''}
-            </label>
-            <DynamicInput
+            <FieldTemplate
+              field={field}
               inputMapping={inputMapping}
-              configuration={field}
-              onChange={onFieldChanged}
-              onTouched={onFieldTouched}
+              onFieldChanged={onFieldChanged}
+              onFieldTouched={onFieldTouched}
             />
             {formData?.touched && formData?.touched[field.id] && (
               <FieldValidator
@@ -110,14 +106,6 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
           </div>
         ))
       ))}
-      { // Debugging help
-      /* <br />
-      <div>
-        Touched:
-        <pre>
-          {JSON.stringify(formData.touched, null, 2)}
-        </pre>
-      </div> */}
     </>
   );
 };

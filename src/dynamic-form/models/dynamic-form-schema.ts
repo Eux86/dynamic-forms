@@ -36,6 +36,13 @@ export interface IInputControl {
   configuration: IFieldConfiguration;
 }
 
+export interface IFieldTemplate {
+  field: IFieldConfiguration,
+  inputMapping: IDynamicFieldInputs,
+  onFieldChanged: OnInputChangeEventType,
+  onFieldTouched: OnInputTouchedEventType,
+}
+
 export enum ValidationType {
   pattern,
   minLength,
