@@ -3,7 +3,6 @@ import {
   IFieldConfiguration,
   ValidationFunctionType,
 } from './models/dynamic-form-schema';
-import validations from './validations';
 import { IValidationErrorProps } from './validation-error';
 
 interface IProps {
@@ -12,6 +11,7 @@ interface IProps {
   data: any;
   children: FunctionComponent<IValidationErrorProps>;
   onFieldErrors?: (configuration: IFieldConfiguration, error: string[]) => void;
+  validations: ValidationFunctionType[],
 }
 
 export const FieldValidator: React.FunctionComponent<IProps> = (props) => {
@@ -20,6 +20,7 @@ export const FieldValidator: React.FunctionComponent<IProps> = (props) => {
     data,
     children,
     onFieldErrors,
+    validations,
   } = props;
 
   const validationErrors: string[] = React.useMemo(() => {

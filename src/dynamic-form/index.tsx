@@ -5,6 +5,7 @@ import {
   IValidation,
   ValidationType,
   ConditionFunctionType,
+  ValidationFunctionType,
 } from './models/dynamic-form-schema';
 import { OnInputChangeEventType, OnFormChangeEventType } from './models/event-types';
 import { DynamicInput } from './dynamic-input';
@@ -17,11 +18,14 @@ import {
   reducer,
   ISetTouchedAction,
 } from './form-state-reducer';
-import conditions from './conditions';
+import defaultConditions from './conditions';
+import defaultValidations from './validations';
 
 interface IProps {
   onChange?: OnFormChangeEventType,
   schema: IDynamicFormSchema,
+  validations?: ValidationFunctionType[],
+  conditions?: ConditionFunctionType[],
 }
 
 const formInitialState: IFormState = {} as IFormState;
@@ -30,7 +34,11 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
   const {
     schema,
     onChange,
+    conditions: customConditions,
+    validations: customValidations,
   } = props;
+  const conditions = [...defaultConditions, ...customConditions ?? []];
+  const validations = [...defaultValidations, ...customValidations ?? []];
 
   const [formData, dispatch] = React.useReducer(reducer, formInitialState);
 
@@ -57,8 +65,8 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
   );
   return (
     <>
-      {schema.fields.map((field: IFieldConfiguration) => (
-        conditions.map((condition: ConditionFunctionType) => condition(field, formData.values) && (
+      {schema && schema.fields && schema.fields.map((field: IFieldConfiguration) => (
+        conditions && conditions.map((condition: ConditionFunctionType) => condition(field, formData.values) && (
           <div key={field.id}>
             <label htmlFor={field.id}>
               {field.label}
@@ -70,6 +78,7 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
                 configuration={field}
                 data={formData?.values && formData?.values[field.id]}
                 onFieldErrors={onFieldErrors}
+                validations={validations}
               >
                 {ValidationError}
               </FieldValidator>
