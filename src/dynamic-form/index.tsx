@@ -32,6 +32,7 @@ interface IProps {
   conditions?: ConditionFunctionType[],
   customInputs?: IDynamicFieldInputs,
   customFieldTemplate?: React.FunctionComponent<IFieldTemplate>,
+  values?: { [key: string]: string },
 }
 
 const defaultInputMapping: IDynamicFieldInputs = {
@@ -57,6 +58,7 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
     validations: customValidations,
     customInputs,
     customFieldTemplate,
+    values,
   } = props;
 
   const conditions = React.useMemo(() => [...defaultConditions, ...customConditions ?? []], [customConditions]);
@@ -67,7 +69,7 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
   const [formData, dispatch] = React.useReducer(reducer, formInitialState);
 
   const onFieldChanged: OnInputChangeEventType = React.useCallback((value: string, configuration: IFieldConfiguration) => {
-    dispatch({ type: 'set-values', payload: { value, fieldId: configuration.id } } as ISetValueAction);
+    dispatch({ type: 'set-value', payload: { value, fieldId: configuration.id } } as ISetValueAction);
   }, []);
 
   const onFieldErrors = React.useCallback((configuratin: IFieldConfiguration, errors: string[]) => {
@@ -83,6 +85,10 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
       onChange(formData.values, formData.errors);
     }
   }, [formData, onChange]);
+
+  React.useEffect(() => {
+    dispatch({ type: 'set-values', payload: values } as ISetValueAction);
+  }, [values]);
 
   return (
     <>

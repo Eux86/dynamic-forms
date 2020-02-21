@@ -7,6 +7,7 @@ const demoSchema: IDynamicFormSchema = {
     {
       id: 'name',
       label: 'First Name',
+      placeholder: 'Morty',
       type: 'text',
       validations: [
         {
@@ -19,6 +20,7 @@ const demoSchema: IDynamicFormSchema = {
     {
       id: 'lastname',
       label: 'Last Name',
+      placeholder: 'Sanchez',
       type: 'text',
       validations: [
         {
@@ -36,11 +38,13 @@ const demoSchema: IDynamicFormSchema = {
       id: 'age',
       label: 'age',
       type: 'number',
+      defaultValue: '14',
     },
     {
       id: 'title',
       label: 'Title',
       type: 'single-selection',
+      defaultValue: 'mr',
       options: {
         items: [
           {
@@ -77,6 +81,7 @@ const demoSchema: IDynamicFormSchema = {
       id: 'pets',
       label: 'Owned Pets',
       type: 'multiple-selection',
+      defaultValue: "\"['cat']\"",
       options: {
         items: [
           {
@@ -101,6 +106,7 @@ const demoSchema: IDynamicFormSchema = {
       id: 'ilikethis',
       label: 'I like DynamicForms',
       type: 'boolean',
+      defaultValue: 'true',
       validations: [
         {
           type: ValidationType.required,
@@ -134,7 +140,10 @@ export const Playground: React.FunctionComponent = () => {
           <textarea className={sourceHasError ? 'error' : ''} value={schemaString} onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => setSchemaString(event.target.value)} />
         </div>
         <div className="schema-source col">
-          <DynamicForm schema={schema} onChange={(data: any, errors: any) => { setFormData(data); setFormErrors(errors); }} />
+          <DynamicForm
+            schema={schema}
+            onChange={(data: any, errors: any) => { setFormData(data); setFormErrors(errors); }}
+          />
         </div>
       </div>
       <div className="second-container">

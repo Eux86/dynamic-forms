@@ -6,13 +6,19 @@ export interface IFormState {
 }
 
 export interface IAction {
-  type: 'set-errors' | 'set-values' | 'set-touched';
+  type: 'set-errors' | 'set-value' | 'set-values' | 'set-touched';
 }
 
 export interface ISetValueAction extends IAction {
   payload: {
     fieldId: string;
     value: string;
+  };
+}
+
+export interface ISetValuesAction extends IAction {
+  payload: {
+    [key: string]: string;
   };
 }
 
@@ -30,6 +36,10 @@ export interface ISetTouchedAction extends IAction {
 }
 
 export function isSetValueAction(action: IAction): action is ISetValueAction {
+  return action.type === 'set-value';
+}
+
+export function isSetValuesAction(action: IAction): action is ISetValuesAction {
   return action.type === 'set-values';
 }
 
@@ -62,6 +72,10 @@ export function reducer(data: IFormState, formDataAction: IAction) {
       [formDataAction.payload.fieldId]: true,
     };
     return { ...data, touched: newVal };
+  }
+  if (isSetValuesAction(formDataAction)) {
+    const newVal = formDataAction.payload;
+    return { ...data, values: newVal };
   }
   return data;
 }

@@ -1,5 +1,4 @@
+- Accept for values as prop of the DynamicForm component, so that users can pre-fill the form with saved data
+- read-only mode
 - Use decorator to implement common functions for the controls
 - unit tests for components
-- read-only mode
-- Versioning
-- NPM publish

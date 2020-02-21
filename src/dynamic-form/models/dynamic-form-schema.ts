@@ -34,7 +34,7 @@ export interface IInputControl {
   onChange: OnInputChangeEventType;
   onTouched: OnInputTouchedEventType;
   configuration: IFieldConfiguration;
-  value?: string | boolean;
+  value: string | boolean | string[];
 }
 
 export interface IFieldTemplate {

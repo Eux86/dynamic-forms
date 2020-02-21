@@ -6,6 +6,7 @@ export const SelectControl: React.FunctionComponent<IInputControl> = (props) => 
     configuration,
     onChange,
     onTouched,
+    value,
   } = props;
 
   const onChangeInternal = (event: React.ChangeEvent<HTMLSelectElement>): void => {
@@ -18,7 +19,7 @@ export const SelectControl: React.FunctionComponent<IInputControl> = (props) => 
 
   return (
     <select
-      defaultValue={configuration.defaultValue || 'no-selection'}
+      defaultValue={value as string || configuration.defaultValue || 'no-selection'}
       onChange={onChangeInternal}
       onBlur={onBlurInternal}
     >

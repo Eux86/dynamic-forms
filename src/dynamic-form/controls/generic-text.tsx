@@ -6,6 +6,7 @@ export const GenericTextControl: React.FunctionComponent<IInputControl> = (props
     configuration,
     onChange,
     onTouched,
+    value,
   } = props;
 
   const onChangeInternal = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -21,7 +22,7 @@ export const GenericTextControl: React.FunctionComponent<IInputControl> = (props
       id={configuration.id}
       type={configuration.type}
       placeholder={configuration.placeholder}
-      value={configuration.defaultValue}
+      value={value as string || configuration.defaultValue}
       onChange={onChangeInternal}
       onBlur={onTouchedInternal}
     />

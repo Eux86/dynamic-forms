@@ -6,25 +6,38 @@ export const CheckboxGroup: React.FunctionComponent<IInputControl> = (props) => 
     configuration,
     onChange,
     onTouched,
+    value,
   } = props;
 
-  const [state, setState] = React.useState([] as string[]);
+  const parseDefault = () => {
+    try {
+      return configuration.defaultValue && JSON.parse(configuration.defaultValue);
+    } catch (_) {
+      return undefined;
+    }
+  };
+
+  const [state, setState] = React.useState(
+    value as string[]
+    || parseDefault() as string[]
+    || [] as string[],
+  );
 
   const onChangeInternal = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const {
       checked,
-      value,
+      value: controlValue,
     } = event.target;
     let newState = state.slice();
     if (checked) {
-      if (!state.includes(value)) {
+      if (!state.includes(controlValue)) {
         newState = [
           ...state,
-          value,
+          controlValue,
         ];
       }
-    } else if (state.includes(value)) {
-      const index = newState.indexOf(value);
+    } else if (state.includes(controlValue)) {
+      const index = newState.indexOf(controlValue);
       if (index > -1) {
         newState.splice(index, 1);
       }
