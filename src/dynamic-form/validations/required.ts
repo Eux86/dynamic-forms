@@ -12,7 +12,7 @@ export const requiredValidation: ValidationFunctionType = (value: any, fieldConf
     return undefined;
   }
   // Execute actual validation
-  if (value == null || value === '') {
+  if (value == null || value === '' || value === false) {
     return validation.errorMessage || validation.type.toString();
   }
   return undefined;
