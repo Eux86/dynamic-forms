@@ -97,6 +97,17 @@ const demoSchema: IDynamicFormSchema = {
         ],
       },
     },
+    {
+      id: 'ilikethis',
+      label: 'I like DynamicForms',
+      type: 'boolean',
+      validations: [
+        {
+          type: ValidationType.required,
+          errorMessage: 'You must like this project :o',
+        },
+      ],
+    },
   ],
 };
 
