@@ -3,6 +3,7 @@
 /node_modules/
 /.storybook/
 /.github/
+/docs/
 .eslintrc.js
 .gitignore
 .npmignore
