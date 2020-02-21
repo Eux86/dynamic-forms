@@ -15,7 +15,6 @@ export interface IFieldConfiguration {
   type: FieldType;
   description?: string;
   placeholder?: string;
-  required?: boolean;
   requiredErrorMessage?: string;
 }
 
@@ -28,16 +27,19 @@ export type FieldType =
   | 'tel'
   | 'date'
   | 'multiple-selection'
-  | 'single-selection';
+  | 'single-selection'
+  | 'boolean';
 
 export interface IInputControl {
   onChange: OnInputChangeEventType;
   onTouched: OnInputTouchedEventType;
   configuration: IFieldConfiguration;
+  value?: string | boolean;
 }
 
 export interface IFieldTemplate {
   field: IFieldConfiguration,
+  value: string | boolean,
   inputMapping: IDynamicFieldInputs,
   onFieldChanged: OnInputChangeEventType,
   onFieldTouched: OnInputTouchedEventType,
@@ -89,4 +91,5 @@ export interface IDynamicFieldInputs {
   email: React.FunctionComponent<IInputControl>,
   'single-selection': React.FunctionComponent<IInputControl>,
   'multiple-selection': React.FunctionComponent<IInputControl>,
+  boolean: React.FunctionComponent<IInputControl>,
 }

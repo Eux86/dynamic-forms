@@ -7,6 +7,7 @@ interface IProps {
   onChange: OnInputChangeEventType;
   onTouched: OnInputTouchedEventType;
   inputMapping: IDynamicFieldInputs;
+  value: string | boolean;
 }
 
 export const DynamicInput: React.FunctionComponent<IProps> = ({
@@ -14,7 +15,8 @@ export const DynamicInput: React.FunctionComponent<IProps> = ({
   onChange,
   onTouched,
   inputMapping,
+  value,
 }) => {
   const Control: React.FunctionComponent<IInputControl> = inputMapping[configuration.type];
-  return <Control configuration={configuration} onChange={onChange} onTouched={onTouched} />;
+  return <Control value={value} configuration={configuration} onChange={onChange} onTouched={onTouched} />;
 };

@@ -10,6 +10,7 @@ import { DynamicInput } from './dynamic-input';
 export const FieldTemplate: React.FunctionComponent<IFieldTemplate> = (props) => {
   const {
     field,
+    value,
     inputMapping,
     onFieldChanged,
     onFieldTouched,
@@ -26,6 +27,7 @@ export const FieldTemplate: React.FunctionComponent<IFieldTemplate> = (props) =>
         {isRequired(field) ? '*' : ''}
       </label>
       <DynamicInput
+        value={value}
         inputMapping={inputMapping}
         configuration={field}
         onChange={onFieldChanged}

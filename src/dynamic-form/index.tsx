@@ -23,6 +23,7 @@ import { GenericTextControl } from './controls/generic-text';
 import { SelectControl } from './controls/select';
 import { CheckboxGroup } from './controls/checkbox-group';
 import { FieldTemplate as DefaultFieldTemplate } from './field-template';
+import { CheckboxControl } from './controls/checkbox';
 
 interface IProps {
   onChange?: OnFormChangeEventType,
@@ -43,6 +44,7 @@ const defaultInputMapping: IDynamicFieldInputs = {
   email: GenericTextControl,
   'single-selection': SelectControl,
   'multiple-selection': CheckboxGroup,
+  boolean: CheckboxControl,
 };
 
 const formInitialState: IFormState = {} as IFormState;
@@ -89,6 +91,7 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
           <div key={field.id}>
             <FieldTemplate
               field={field}
+              value={formData?.values && formData?.values[field.id]}
               inputMapping={inputMapping}
               onFieldChanged={onFieldChanged}
               onFieldTouched={onFieldTouched}
