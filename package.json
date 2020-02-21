@@ -8,12 +8,14 @@
   },
   "main": "lib/index.js",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+  },
   "peerDependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "@storybook/addon-docs": "^5.3.13",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.26",
     "@types/react": "^16.9.19",
@@ -39,12 +41,11 @@
   },
   "scripts": {
     "build": "tsc",
-    "lint": "react-scripts lint",
     "eslint": "eslint '**/*.{ts,tsx}'",
     "eslint:fix": "eslint --fix '**/*.{ts,tsx}'",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -c .storybook -o docs",
+    "storybook": "start-storybook -p 9009 -s public --docs",
+    "build-storybook": "build-storybook -c .storybook -o docs --docs",
     "semantic-release": "semantic-release"
   },
   "eslintConfig": {

@@ -1,0 +1,100 @@
+import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
+import DynamicForm, { ValidationType } from "..";
+
+<Meta title="Documentation" component={DynamicForm} />
+
+# DynamicForms
+The aim of this library is to provide a component that can create **forms based on a JSON configuration**.
+
+The form is a group of input controls and is not wrapped around a `<Form >` element, therefore no `submit` action is handled internally.
+
+The values filled in the form are returned through an `onChange` callback, which returns an object containing the form's values and all the validation errors.
+
+## Simple Form
+
+A simple form with required fields, password type field with hidden character and a boolean value.
+
+Try clicking or tabbing through the form leaving the content of each field empty to see the validation error appear.
+
+<Preview>
+  <Story name="Simple Form">
+    <DynamicForm
+      schema={{
+        fields: [
+          {
+            id: "username",
+            type: "text",
+            label: "Username",
+            validations: [
+              {
+                type: ValidationType.required,
+                errorMessage: "This field is required"
+              }
+            ]
+          },
+          {
+            id: "password",
+            type: "password",
+            label: "Password",
+            validations: [
+              {
+                type: ValidationType.required,
+                errorMessage: "This field is required"
+              }
+            ]
+          },
+          {
+            id: "termsAndConditions",
+            type: "boolean",
+            label: "Accept terms and conditions",
+            validations: [
+              {
+                type: ValidationType.required,
+                errorMessage: "This field is required"
+              }
+            ]
+          }
+        ]
+      }}
+    />
+  </Story>
+</Preview>
+
+## Persisting form values
+
+The values in the next form are persisted across refreshes.
+
+Try adding some data and then refreshing the page. You will find the saved data in your browser's localStorage.
+
+<Preview>
+  <Story id="documentation--stored-to-localstorage" />
+</Preview>
+
+Code for `onChangeHandler`:
+
+```typescript
+const onChangeHandler: OnFormChangeEventType = (data: any) => {
+  if (data) {
+    window.localStorage.setItem(
+      "storedToLocalStorageDemo",
+      JSON.stringify(data)
+    );
+  }
+};
+```
+
+Code for `getData()`:
+
+```typescript
+const getData = () => {
+  const string = window.localStorage.getItem("storedToLocalStorageDemo");
+  if (string) {
+    try {
+      return JSON.parse(string);
+    } catch (_) {
+      return undefined;
+    }
+  }
+  return undefined;
+};
+```

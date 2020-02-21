@@ -40,12 +40,7 @@ const demoSchema: IDynamicFormSchema = {
   ],
 };
 
-export default {
-  title: 'DynamicForm',
-  component: DynamicForm,
-};
-
-export const SimpleForm = () => (
+export const SimpleForm:React.FunctionComponent = () => (
   <DynamicForm
     schema={demoSchema}
   />
