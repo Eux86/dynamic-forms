@@ -1,7 +1,7 @@
 import React from 'react';
-import DynamicForm from '..';
-import { IDynamicFormSchema } from '../dynamic-form/models/dynamic-form-schema';
-import { OnFormChangeEventType } from '../dynamic-form/models/event-types';
+import DynamicForm from '../..';
+import { IDynamicFormSchema } from '../../dynamic-form/models/dynamic-form-schema';
+import { OnFormChangeEventType } from '../../dynamic-form/models/event-types';
 
 const demoSchema: IDynamicFormSchema = {
   fields: [
@@ -42,7 +42,7 @@ const getData = () => {
 };
 
 export default {
-  title: 'Documentation',
+  title: 'Main Doc',
   component: DynamicForm,
 };
 

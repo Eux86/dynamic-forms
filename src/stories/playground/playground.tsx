@@ -1,6 +1,6 @@
 import React from 'react';
 import './playground.css';
-import DynamicForm, { IDynamicFormSchema, ValidationType } from '..';
+import DynamicForm, { IDynamicFormSchema, ValidationType } from '../..';
 
 const demoSchema: IDynamicFormSchema = {
   fields: [

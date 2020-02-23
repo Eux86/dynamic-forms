@@ -1,7 +1,7 @@
 import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
 import DynamicForm, { ValidationType } from "..";
 
-<Meta title="Documentation" component={DynamicForm} />
+<Meta title="Docs / Main" component={DynamicForm} />
 
 # DynamicForms
 The aim of this library is to provide a component that can create **forms based on a JSON configuration**.
@@ -9,6 +9,9 @@ The aim of this library is to provide a component that can create **forms based 
 The form is a group of input controls and is not wrapped around a `<Form >` element, therefore no `submit` action is handled internally.
 
 The values filled in the form are returned through an `onChange` callback, which returns an object containing the form's values and all the validation errors.
+
+## Quick Start
+WIP...
 
 ## Simple Form
 
@@ -67,7 +70,7 @@ The values in the next form are persisted across refreshes.
 Try adding some data and then refreshing the page. You will find the saved data in your browser's localStorage.
 
 <Preview>
-  <Story id="documentation--stored-to-localstorage" />
+  <Story id="main-doc--stored-to-localstorage" />
 </Preview>
 
 Code for `onChangeHandler`:
@@ -98,3 +101,13 @@ const getData = () => {
   return undefined;
 };
 ```
+
+## Readonly
+In some cases a readonly form may be necessary to show the data filled in a DynamicForm somewhere else
+without the user being able to change it. To do so a `readonly: boolean` prop exist.
+
+<Preview>
+  <Story id="main-doc--readonly" />
+</Preview>
+
+## WIP ...
