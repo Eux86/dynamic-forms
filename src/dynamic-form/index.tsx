@@ -33,6 +33,7 @@ interface IProps {
   customInputs?: IDynamicFieldInputs,
   customFieldTemplate?: React.FunctionComponent<IFieldTemplate>,
   values?: { [key: string]: string },
+  readonly?: boolean
 }
 
 const defaultInputMapping: IDynamicFieldInputs = {
@@ -59,6 +60,7 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
     customInputs,
     customFieldTemplate,
     values,
+    readonly = false,
   } = props;
 
   const conditions = React.useMemo(() => [...defaultConditions, ...customConditions ?? []], [customConditions]);
@@ -96,6 +98,7 @@ const DynamicForm: React.FunctionComponent<IProps> = (props) => {
         conditions && conditions.map((condition: ConditionFunctionType) => condition(field, formData.values) && (
           <div key={field.id}>
             <FieldTemplate
+              readonly={readonly}
               field={field}
               value={formData?.values && formData?.values[field.id]}
               inputMapping={inputMapping}

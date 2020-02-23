@@ -35,6 +35,7 @@ export interface IInputControl {
   onTouched: OnInputTouchedEventType;
   configuration: IFieldConfiguration;
   value: string | boolean | string[];
+  readonly: boolean;
 }
 
 export interface IFieldTemplate {
@@ -43,6 +44,7 @@ export interface IFieldTemplate {
   inputMapping: IDynamicFieldInputs,
   onFieldChanged: OnInputChangeEventType,
   onFieldTouched: OnInputTouchedEventType,
+  readonly: boolean,
 }
 
 export enum ValidationType {

@@ -14,6 +14,7 @@ export const FieldTemplate: React.FunctionComponent<IFieldTemplate> = (props) =>
     inputMapping,
     onFieldChanged,
     onFieldTouched,
+    readonly,
   } = props;
 
   const isRequired = (configuration: IFieldConfiguration) => (
@@ -32,6 +33,7 @@ export const FieldTemplate: React.FunctionComponent<IFieldTemplate> = (props) =>
         configuration={field}
         onChange={onFieldChanged}
         onTouched={onFieldTouched}
+        readonly={readonly}
       />
     </>
   );

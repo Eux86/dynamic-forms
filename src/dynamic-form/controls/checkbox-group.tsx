@@ -7,6 +7,7 @@ export const CheckboxGroup: React.FunctionComponent<IInputControl> = (props) => 
     onChange,
     onTouched,
     value,
+    readonly,
   } = props;
 
   const parseDefault = () => {
@@ -57,6 +58,7 @@ export const CheckboxGroup: React.FunctionComponent<IInputControl> = (props) => 
         configuration.options?.items.map((option: IOptionItem) => (
           <label key={option.id} htmlFor={option.id}>
             <input
+              disabled={readonly}
               type="checkbox"
               name={configuration.id}
               value={option.value}

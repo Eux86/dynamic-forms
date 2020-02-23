@@ -7,6 +7,7 @@ export const GenericTextControl: React.FunctionComponent<IInputControl> = (props
     onChange,
     onTouched,
     value,
+    readonly,
   } = props;
 
   const onChangeInternal = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -19,6 +20,7 @@ export const GenericTextControl: React.FunctionComponent<IInputControl> = (props
 
   return (
     <input
+      disabled={readonly}
       id={configuration.id}
       type={configuration.type}
       placeholder={configuration.placeholder}
