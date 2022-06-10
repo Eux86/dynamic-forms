@@ -37,7 +37,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "semantic-release": "^17.0.3"
+    "semantic-release": "^19.0.3"
   },
   "scripts": {
     "build": "tsc",
